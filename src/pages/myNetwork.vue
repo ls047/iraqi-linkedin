@@ -1,5 +1,5 @@
 <template>
-  <motion.div
+  <div
     class="min-h-screen bg-gray-150 text-gray-900"
     :initial="{ opacity: 0, y: -40 }"
     :animate="{ opacity: 1, y: 0 }"
@@ -253,7 +253,7 @@
         </aside>
       </div>
     </div>
-  </motion.div>
+  </div>
 </template>
 
 <script setup lang="ts">

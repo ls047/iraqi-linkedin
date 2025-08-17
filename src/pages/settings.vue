@@ -1,5 +1,5 @@
 <template>
-  <motion.div
+  <div
     class="min-h-screen bg-gray-150 text-gray-900"
     :initial="{ opacity: 0, y: -40 }"
     :animate="{ opacity: 1, y: 0 }"
@@ -441,7 +441,7 @@
         </button>
       </div>
     </div>
-  </motion.div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -460,14 +460,14 @@ const settingsSections = ref([
 ])
 
 const profileSettings = reactive({
-  fullName: 'Ali Al-Baghdadi',
+  fullName: 'Ali Al- ',
   title: 'مطور فرونتند',
   location: 'بغداد، العراق',
   bio: 'مطور فرونتند شغوف ببناء واجهات مستخدم جميلة وسهلة الاستخدام. متخصص في Vue.js و TypeScript، وأحب العمل على مشاريع تخدم المجتمع العراقي. من بغداد الرشيد إلى كل العراق! 🇮🇶',
   phone: '+964 750 123 4567',
-  website: 'https://alibaghdadi.dev',
-  github: 'github.com/alibaghdadi',
-  linkedin: 'linkedin.com/in/alibaghdadi'
+  website: 'https://ali .dev',
+  github: 'github.com/ali ',
+  linkedin: 'linkedin.com/in/ali '
 })
 
 const privacySettings = reactive({

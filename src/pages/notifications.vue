@@ -1,5 +1,5 @@
 <template>
-  <motion.div
+  <div
     class="min-h-screen bg-gray-150 text-gray-900"
     :initial="{ opacity: 0, y: -40 }"
     :animate="{ opacity: 1, y: 0 }"
@@ -110,7 +110,7 @@
         <p class="text-gray-500">لا توجد إشعارات جديدة</p>
       </div>
     </div>
-  </motion.div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -133,7 +133,7 @@ const notifications = ref<Notification[]>([
   {
     id: '1',
     type: 'connection',
-    sender: 'Zahraa Hameed',
+    sender: 'Zahraa Hameed ',
     action: 'أرسلت لك دعوة اتصال',
     time: 'قبل 5 دقائق',
     isRead: false,
@@ -142,7 +142,7 @@ const notifications = ref<Notification[]>([
   {
     id: '2',
     type: 'job',
-    sender: 'الرافدين التقنية',
+    sender: ' الرافدين التقنية ',
     action: 'نشرت وظيفة جديدة: مطور Vue.js',
     time: 'قبل ساعة',
     isRead: false,
@@ -151,7 +151,7 @@ const notifications = ref<Notification[]>([
   {
     id: '3',
     type: 'post',
-    sender: 'Hussein Al-Musawi',
+    sender: 'Hussein Al-Musawi ',
     action: 'علق على منشورك',
     time: 'قبل 3 ساعات',
     isRead: false,
@@ -161,7 +161,7 @@ const notifications = ref<Notification[]>([
     id: '4',
     type: 'general',
     sender: 'فرصة الي',
-    action: 'مرحباً بك في المنصة! ابدأ ببناء شبكتك المهنية',
+    action: ' مرحباً بك في المنصة! ابدأ ببناء شبكتك المهنية ',
     time: 'قبل يوم',
     isRead: true,
     avatar: 'https://api.dicebear.com/7.x/shapes/svg?seed=LinkedIn'
@@ -169,7 +169,7 @@ const notifications = ref<Notification[]>([
   {
     id: '5',
     type: 'connection',
-    sender: 'Amina Al-Rashid',
+    sender: 'Amina Al-Rashid ',
     action: 'قبلت دعوتك للاتصال',
     time: 'قبل يوم',
     isRead: false,
@@ -187,7 +187,7 @@ const notifications = ref<Notification[]>([
   {
     id: '7',
     type: 'post',
-    sender: 'Karim Al-Zubaidi',
+    sender: 'Karim Al-Zubaidi ',
     action: 'أعجب بمنشورك',
     time: 'قبل يومين',
     isRead: false,
@@ -205,7 +205,7 @@ const notifications = ref<Notification[]>([
   {
     id: '9',
     type: 'connection',
-    sender: 'Nour Al-Hassan',
+    sender: 'Nour Al-Hassan ',
     action: 'أرسلت لك دعوة اتصال',
     time: 'قبل 3 أيام',
     isRead: false,
@@ -214,7 +214,7 @@ const notifications = ref<Notification[]>([
   {
     id: '10',
     type: 'job',
-    sender: 'العراق كلاود',
+    sender: ' العراق كلاود',
     action: 'نشرت وظيفة جديدة: مهندس أمن سيبراني',
     time: 'قبل 4 أيام',
     isRead: false,
@@ -223,7 +223,7 @@ const notifications = ref<Notification[]>([
   {
     id: '11',
     type: 'post',
-    sender: 'Ahmed Al-Jabouri',
+    sender: 'Ahmed Al-Jabouri ',
     action: 'شارك منشورك',
     time: 'قبل 4 أيام',
     isRead: false,
@@ -232,7 +232,7 @@ const notifications = ref<Notification[]>([
   {
     id: '12',
     type: 'general',
-    sender: 'Iraq JS Community',
+    sender: 'Iraq JS Community ',
     action: 'اجتماع جديد: Vue.js في العراق',
     time: 'قبل أسبوع',
     isRead: true,
@@ -241,7 +241,7 @@ const notifications = ref<Notification[]>([
   {
     id: '13',
     type: 'connection',
-    sender: 'Fatima Al-Khalil',
+    sender: 'Fatima Al-Khalil ',
     action: 'قبلت دعوتك للاتصال',
     time: 'قبل أسبوع',
     isRead: true,

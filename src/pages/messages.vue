@@ -1,12 +1,32 @@
 <template>
-  <motion.div
+  <div
     class="min-h-screen bg-gray-150 text-gray-900"
     :initial="{ opacity: 0, y: -40 }"
     :animate="{ opacity: 1, y: 0 }"
     :transition="{ duration: 0.6, ease: 'easeOut' }"
   >
-    <div class="max-w-6xl mx-auto px-4 py-8" dir="rtl">
-      <div class="mb-8 text-center">
+    <div class="max-w-6xl mx-auto px-4 py-4 sm:py-8" dir="rtl">
+      <!-- Mobile Header -->
+      <div class="lg:hidden mb-4">
+        <div class="flex items-center justify-between">
+          <h1 class="text-2xl font-bold bg-gradient-to-r from-[#0A66C2] to-blue-600 bg-clip-text text-transparent">
+            الرسائل
+          </h1>
+          <button
+            v-if="selectedConversation"
+            @click="goBackToConversations"
+            class="p-2 rounded-full bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm"
+          >
+            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+          </button>
+        </div>
+        <p class="text-gray-600 text-sm">تواصل مع معارفك العراقيين 🇮🇶</p>
+      </div>
+
+      <!-- Desktop Header -->
+      <div class="hidden lg:block mb-8 text-center">
         <h1 class="text-3xl font-bold bg-gradient-to-r from-[#0A66C2] to-blue-600 bg-clip-text text-transparent">
           الرسائل
         </h1>
@@ -14,7 +34,8 @@
       </div>
 
       <div class="bg-white/80 backdrop-blur-sm border border-white/20 shadow-2xl rounded-2xl overflow-hidden">
-        <div class="grid grid-cols-1 lg:grid-cols-3 h-[600px]">
+        <!-- Desktop Layout -->
+        <div class="hidden lg:grid lg:grid-cols-3 h-[600px]">
           <!-- Conversations List -->
           <div class="lg:col-span-1 border-l border-gray-200/50 bg-gradient-to-b from-gray-50/50 to-white/30">
             <div class="p-6 border-b border-gray-200/50 bg-white/50">
@@ -180,9 +201,151 @@
             </div>
           </div>
         </div>
+
+        <!-- Mobile Layout -->
+        <div class="lg:hidden">
+          <!-- Conversations List (Mobile) -->
+          <div v-if="!selectedConversation" class="h-[calc(100vh-200px)]">
+            <div class="p-4 border-b border-gray-200/50 bg-white/50">
+              <div class="relative">
+                <input
+                  type="search"
+                  placeholder="🔍 دوّر في الرسائل..."
+                  class="w-full rounded-xl bg-gray-100/80 border-0 px-4 py-3 text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#0A66C2]/50 focus:bg-white transition-all duration-300"
+                />
+                <div class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                  🔍
+                </div>
+              </div>
+            </div>
+
+            <div class="h-[calc(100vh-280px)] overflow-y-auto custom-scrollbar">
+              <div
+                v-for="conversation in conversations"
+                :key="conversation.id"
+                class="p-4 border-b border-gray-100/50 hover:bg-gradient-to-r hover:from-[#0A66C2]/5 hover:to-blue-50/50 cursor-pointer transition-all duration-300 group active:bg-[#0A66C2]/10"
+                @click="selectConversation(conversation)"
+              >
+                <div class="flex items-center gap-4">
+                  <div class="relative">
+                    <img
+                      :src="conversation.avatar"
+                      :alt="conversation.name"
+                      class="h-12 w-12 rounded-full ring-2 ring-white shadow-md object-cover transition-transform duration-300 group-hover:scale-110"
+                    />
+                    <div
+                      v-if="conversation.unreadCount > 0"
+                      class="absolute -top-1 -right-1 h-5 w-5 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs rounded-full flex items-center justify-center animate-pulse shadow-lg"
+                    >
+                      {{ conversation.unreadCount }}
+                    </div>
+                    <div
+                      v-else
+                      class="absolute -bottom-1 -right-1 h-3 w-3 bg-green-500 rounded-full border-2 border-white shadow-sm"
+                    ></div>
+                  </div>
+
+                  <div class="flex-1 min-w-0">
+                    <div class="flex items-center justify-between mb-1">
+                      <h3 class="font-semibold text-sm text-gray-900 truncate">
+                        {{ conversation.name }}
+                      </h3>
+                      <span class="text-xs text-gray-500 whitespace-nowrap">
+                        {{ conversation.lastMessageTime }}
+                      </span>
+                    </div>
+                    <p class="text-xs text-gray-600 truncate leading-relaxed">
+                      {{ conversation.lastMessage }}
+                    </p>
+                    <p class="text-xs text-gray-400 mt-1">
+                      {{ conversation.title }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chat Area (Mobile) -->
+          <div v-else class="h-[calc(100vh-200px)] flex flex-col bg-gradient-to-br from-white/90 to-gray-50/50">
+            <!-- Chat Header (Mobile) -->
+            <div class="p-4 border-b border-gray-200/50 bg-white/80 backdrop-blur-sm">
+              <div class="flex items-center gap-3">
+                <img
+                  :src="selectedConversation.avatar"
+                  :alt="selectedConversation.name"
+                  class="h-10 w-10 rounded-full ring-2 ring-[#0A66C2]/20 shadow-md"
+                />
+                <div class="flex-1">
+                  <h3 class="font-semibold text-base text-gray-900">{{ selectedConversation.name }}</h3>
+                  <p class="text-xs text-gray-600">{{ selectedConversation.title }}</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Messages (Mobile) -->
+            <div class="flex-1 p-4 overflow-y-auto custom-scrollbar bg-gradient-to-b from-gray-50/30 to-white/50">
+              <div class="space-y-3">
+                <div
+                  v-for="message in selectedConversation.messages"
+                  :key="message.id"
+                  class="flex"
+                  :class="{ 'justify-end': message.isFromMe }"
+                >
+                  <motion.div
+                    :initial="{ opacity: 0, y: 20, scale: 0.95 }"
+                    :animate="{ opacity: 1, y: 0, scale: 1 }"
+                    :transition="{ duration: 0.3, ease: 'easeOut' }"
+                    class="max-w-[80%] px-3 py-2 rounded-2xl text-sm shadow-sm"
+                    :class="message.isFromMe
+                      ? 'bg-gradient-to-r from-[#0A66C2] to-blue-600 text-white rounded-br-md'
+                      : 'bg-white text-gray-900 rounded-bl-md border border-gray-200/50'"
+                  >
+                    <p class="leading-relaxed text-sm">{{ message.text }}</p>
+                    <p class="text-xs mt-1 opacity-70 text-right">
+                      {{ message.time }}
+                    </p>
+                  </motion.div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Message Input (Mobile) -->
+            <div class="p-4 border-t border-gray-200/50 bg-white/80 backdrop-blur-sm">
+              <div class="flex items-end gap-2">
+                <div class="flex-1 relative">
+                  <textarea
+                    v-model="newMessage"
+                    rows="1"
+                    placeholder="اكتب رسالتك هنا... 🇮🇶"
+                    class="w-full rounded-xl bg-gray-100/80 border-0 px-3 py-2 text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#0A66C2]/50 focus:bg-white resize-none transition-all duration-300"
+                    @keydown.enter.prevent="sendMessage"
+                    @input="autoResize"
+                  ></textarea>
+                </div>
+
+                <div class="flex items-center gap-1">
+                  <button class="p-2 rounded-full hover:bg-gray-100 transition-colors text-lg">
+                    😊
+                  </button>
+                  <button class="p-2 rounded-full hover:bg-gray-100 transition-colors text-lg">
+                    📎
+                  </button>
+                  <button
+                    @click="sendMessage"
+                    class="px-4 py-2 bg-gradient-to-r from-[#0A66C2] to-blue-600 text-white rounded-xl hover:shadow-lg transform hover:scale-105 transition-all duration-300 font-medium text-sm"
+                    :disabled="!newMessage.trim()"
+                  >
+                    إرسال
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </motion.div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -341,6 +504,10 @@ function selectConversation(conversation: Conversation) {
   })
 }
 
+function goBackToConversations() {
+  selectedConversation.value = null
+}
+
 function sendMessage() {
   if (!newMessage.value.trim() || !selectedConversation.value) return
 
@@ -458,18 +625,84 @@ function autoResize(event: Event) {
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
 
-/* Responsive improvements */
+/* Mobile-specific improvements */
 @media (max-width: 1024px) {
-  .lg\:grid-cols-3 {
-    grid-template-columns: 1fr;
+  /* Prevent zoom on input focus */
+  input, textarea {
+    font-size: 16px;
   }
 
-  .lg\:col-span-2 {
-    grid-column: 1;
+  /* Better touch targets */
+  button {
+    min-height: 44px;
+    min-width: 44px;
   }
 
-  .h-\[600px\] {
-    height: 500px;
+  /* Improved scrolling on mobile */
+  .custom-scrollbar {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Better spacing for mobile */
+  .p-4 {
+    padding: 1rem;
+  }
+
+  /* Optimize text sizes for mobile */
+  .text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+
+  /* Better message bubbles for mobile */
+  .max-w-\[80\%\] {
+    max-width: 80%;
+  }
+}
+
+/* Active state for mobile touch */
+.active\:bg-\[#0A66C2\]\/10:active {
+  background-color: rgba(10, 102, 194, 0.1);
+}
+
+/* Prevent text selection on mobile */
+* {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Allow text selection in input fields */
+input, textarea {
+  -webkit-user-select: text;
+  -khtml-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+/* Smooth transitions for mobile */
+* {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Better mobile keyboard handling */
+@media (max-width: 1024px) {
+  .min-h-screen {
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+  }
+
+  /* Prevent viewport issues on mobile */
+  html {
+    height: -webkit-fill-available;
+  }
+
+  body {
+    min-height: -webkit-fill-available;
   }
 }
 </style>

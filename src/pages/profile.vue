@@ -1,5 +1,5 @@
 <template>
-  <motion.div
+  <div
     class="min-h-screen bg-gray-150 text-gray-900"
     :initial="{ opacity: 0, y: -40 }"
     :animate="{ opacity: 1, y: 0 }"
@@ -13,11 +13,11 @@
           <div class="flex items-end gap-4">
             <img
               class="h-24 w-24 -translate-y-16 rounded-full ring-4 ring-white bg-white object-cover"
-              src="/shittyPerson.webp"
-              alt="Ali Al-Baghdadi"
+              src="/favicon.ico.jpg"
+              alt="Ali Al-ibadi "
             />
             <div class="flex-1">
-              <h1 class="text-2xl font-bold">Ali Al‑Baghdadi</h1>
+              <h1 class="text-2xl font-bold">Ali Al‑ibadi </h1>
               <p class="text-lg text-gray-600">مطور فرونتند • بغداد، العراق</p>
               <p class="text-sm text-gray-500 mt-1">متخصص في Vue.js, TypeScript, و Tailwind CSS</p>
               <div class="flex items-center gap-4 mt-3 text-sm text-gray-600">
@@ -172,15 +172,15 @@
             <div class="space-y-2 text-sm">
               <p class="flex items-center gap-2">
                 <span>📧</span>
-                <span>ali@example.com</span>
+                <a href="mailto:alikibrahim190@gmail.com">alikibrahim190@gmail.com</a>
               </p>
               <p class="flex items-center gap-2">
                 <span>📱</span>
-                <span>+964 750 123 4567</span>
+                <a dir="ltr" href="tel:+9647501234567">+964 775 655 161</a>
               </p>
               <p class="flex items-center gap-2">
                 <span>🌐</span>
-                <span>github.com/alibaghdadi</span>
+                <a href="https://github.com/ls047">github.com/ls047</a>
               </p>
             </div>
           </div>
@@ -225,7 +225,7 @@
         </div>
       </div>
     </div>
-  </motion.div>
+  </div>
 </template>
 
 <script setup lang="ts">
