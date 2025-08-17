@@ -20,7 +20,7 @@
       <!-- main content -->
       <div class="max-w-6xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-4 gap-6" dir="rtl">
         <!-- left: profile -->
-        <aside class="md:col-span-1 space-y-12">
+        <aside class="hidden md:block md:col-span-1 space-y-12">
           <div class="bg-white border border-gray-200 shadow-sm rounded-xl overflow-hidden">
             <div class="h-18 bg-gradient-to-r from-sky-700/60 via-sky-500/40 to-emerald-500/40 relative">
               <!-- Iraqi palm tree silhouette -->
@@ -320,8 +320,157 @@
           </div>
         </section>
 
+        <!-- Mobile sidebar content (shown after posts on mobile) -->
+        <aside class="md:hidden space-y-4">
+          <div class="bg-white border border-gray-200 shadow-sm rounded-xl p-4">
+            <h3 class="font-semibold">أخبار العراق التقنية</h3>
+            <ul class="mt-3 space-y-2 text-sm text-gray-700">
+              <li><a class="hover:text-gray-900 cursor-pointer" href="#">بغداد تفتتح هَب تقني جديد يم الجادرية 🌴</a></li>
+              <li><a class="hover:text-gray-900 cursor-pointer" href="#">ستارتبات أربيل جمّعن تمويل أولي بالفنتك 🏔️</a></li>
+              <li><a class="hover:text-gray-900 cursor-pointer" href="#">مطوري البصرة يقودون خطوط عربية مفتوحة المصدر 🌊</a></li>
+              <li><a class="hover:text-gray-900 cursor-pointer" href="#">الموصل تستضيف أول هاكاثون تقني بعد التحرير 🏛️</a></li>
+              <li><a class="hover:text-gray-900 cursor-pointer" href="#">كوردستان تطلق برنامج تدريب المطورين الشباب 🗻</a></li>
+              <li><a class="hover:text-gray-900 cursor-pointer" href="#">شركة "العراق كلاود" تطلق خدمات سحابية محلية ☁️</a></li>
+              <li><a class="hover:text-gray-900 cursor-pointer" href="#">جامعة البصرة تفتتح قسم الذكاء الاصطناعي 🎓</a></li>
+              <li><a class="hover:text-gray-900 cursor-pointer" href="#">هاكاثون "تقنية من أجل السلام" في أربيل 🕊️</a></li>
+              <li><a class="hover:text-gray-900 cursor-pointer" href="#">شركة "نينوى تك" تطور تطبيق للتعليم عن بعد 📚</a></li>
+              <li><a class="hover:text-gray-900 cursor-pointer" href="#">مؤتمر الأمن السيبراني العراقي في بغداد 🔒</a></li>
+            </ul>
+            <button class="mt-3 text-[#0A66C2] hover:brightness-110 text-sm cursor-pointer">شوف المزيد</button>
+          </div>
+
+          <div class="bg-white border border-gray-200 shadow-sm rounded-xl p-4">
+            <p class="text-xs text-gray-500">إعلان</p>
+            <div class="mt-2 rounded-lg overflow-hidden border border-gray-200">
+              <div class="h-20 bg-gradient-to-r from-amber-600/70 via-amber-400/50 to-emerald-500/60 relative">
+                <div class="absolute inset-0 flex items-center justify-center text-white text-2xl opacity-30">🌴</div>
+              </div>
+              <div class="p-3">
+                <h4 class="font-semibold">مصرف النهرين • بطاقات تقنية</h4>
+                <p class="text-sm text-gray-700">بطاقات بدون رسوم للمطورين العراقيين. اطلب بطاقتك هسه.</p>
+                <button class="mt-3 px-3 py-1.5 rounded bg-green-500 text-gray-900 text-sm font-medium hover:bg-green-400 cursor-pointer">
+                  اعرف أكثر
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Iraqi Tech Companies -->
+          <div class="bg-white border border-gray-200 shadow-sm rounded-xl p-4">
+            <h3 class="font-semibold">شركات تقنية عراقية</h3>
+            <div class="mt-3 space-y-3">
+              <div class="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer">
+                <img src="https://api.dicebear.com/7.x/shapes/svg?seed=RafTech" alt="RafTech" class="h-8 w-8 rounded" />
+                <div>
+                  <h4 class="font-medium text-sm">الرافدين التقنية</h4>
+                  <p class="text-xs text-gray-600">بغداد • ٥٠ موظف</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer">
+                <img src="https://api.dicebear.com/7.x/shapes/svg?seed=ErbilTech" alt="ErbilTech" class="h-8 w-8 rounded" />
+                <div>
+                  <h4 class="font-medium text-sm">أربيل تك</h4>
+                  <p class="text-xs text-gray-600">أربيل • ٣٠ موظف</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer">
+                <img src="https://api.dicebear.com/7.x/shapes/svg?seed=BasraTech" alt="BasraTech" class="h-8 w-8 rounded" />
+                <div>
+                  <h4 class="font-medium text-sm">البصرة التقنية</h4>
+                  <p class="text-xs text-gray-600">البصرة • ٢٠ موظف</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer">
+                <img src="https://api.dicebear.com/7.x/shapes/svg?seed=MosulTech" alt="MosulTech" class="h-8 w-8 rounded" />
+                <div>
+                  <h4 class="font-medium text-sm">نينوى تك</h4>
+                  <p class="text-xs text-gray-600">الموصل • ٢٥ موظف</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer">
+                <img src="https://api.dicebear.com/7.x/shapes/svg?seed=KurdistanData" alt="KurdistanData" class="h-8 w-8 rounded" />
+                <div>
+                  <h4 class="font-medium text-sm">كوردستان داتا</h4>
+                  <p class="text-xs text-gray-600">أربيل • ١٥ موظف</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer">
+                <img src="https://api.dicebear.com/7.x/shapes/svg?seed=IraqCloud" alt="IraqCloud" class="h-8 w-8 rounded" />
+                <div>
+                  <h4 class="font-medium text-sm">العراق كلاود</h4>
+                  <p class="text-xs text-gray-600">بغداد • ٤٠ موظف</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Iraqi Tech Communities -->
+          <div class="bg-white border border-gray-200 shadow-sm rounded-xl p-4">
+            <h3 class="font-semibold">مجتمعات تقنية عراقية</h3>
+            <div class="mt-3 space-y-2 text-sm">
+              <div class="flex items-center gap-2 p-2 rounded hover:bg-gray-50 cursor-pointer">
+                <span>🌴</span>
+                <span>Iraq JS Community</span>
+                <span class="text-xs text-gray-500">(٢٥٠ عضو)</span>
+              </div>
+              <div class="flex items-center gap-2 p-2 rounded hover:bg-gray-50 cursor-pointer">
+                <span>🏔️</span>
+                <span>Kurdistan Developers</span>
+                <span class="text-xs text-gray-500">(١٨٠ عضو)</span>
+              </div>
+              <div class="flex items-center gap-2 p-2 rounded hover:bg-gray-50 cursor-pointer">
+                <span>🌊</span>
+                <span>Basra Tech Hub</span>
+                <span class="text-xs text-gray-500">(١٢٠ عضو)</span>
+              </div>
+              <div class="flex items-center gap-2 p-2 rounded hover:bg-gray-50 cursor-pointer">
+                <span>🏛️</span>
+                <span>Mosul Innovation</span>
+                <span class="text-xs text-gray-500">(٩٠ عضو)</span>
+              </div>
+              <div class="flex items-center gap-2 p-2 rounded hover:bg-gray-50 cursor-pointer">
+                <span>🎓</span>
+                <span>Baghdad University Tech</span>
+                <span class="text-xs text-gray-500">(٣٠٠ عضو)</span>
+              </div>
+              <div class="flex items-center gap-2 p-2 rounded hover:bg-gray-50 cursor-pointer">
+                <span>🚀</span>
+                <span>Iraqi Startups</span>
+                <span class="text-xs text-gray-500">(١٥٠ عضو)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Iraqi Tech Events -->
+          <div class="bg-white border border-gray-200 shadow-sm rounded-xl p-4">
+            <h3 class="font-semibold">فعاليات تقنية عراقية</h3>
+            <div class="space-y-3 text-sm">
+              <div class="p-3 bg-gradient-to-r from-amber-50 to-orange-50 rounded-lg border border-amber-200">
+                <h4 class="font-medium text-amber-800">ملتقى بغداد التقني</h4>
+                <p class="text-amber-700 text-xs">٢٥ يناير • بغداد</p>
+              </div>
+              <div class="p-3 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg border border-green-200">
+                <h4 class="font-medium text-green-800">هاكاثون أربيل</h4>
+                <p class="text-green-700 text-xs">١ فبراير • أربيل</p>
+              </div>
+              <div class="p-3 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-200">
+                <h4 class="font-medium text-blue-800">مؤتمر البصرة التقني</h4>
+                <p class="text-blue-700 text-xs">١٥ فبراير • البصرة</p>
+              </div>
+              <div class="p-3 bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg border border-purple-200">
+                <h4 class="font-medium text-purple-800">مؤتمر التقنية العراقية ٢٠٢٤</h4>
+                <p class="text-purple-700 text-xs">١٥-١٧ مارس • بغداد</p>
+              </div>
+              <div class="p-3 bg-gradient-to-r from-red-50 to-rose-50 rounded-lg border border-red-200">
+                <h4 class="font-medium text-red-800">هاكاثون الموصل للسلام</h4>
+                <p class="text-red-700 text-xs">١ أبريل • الموصل</p>
+              </div>
+            </div>
+          </div>
+        </aside>
+
         <!-- right: news / ads -->
-        <aside class="md:col-span-1 space-y-4">
+        <aside class="hidden md:block md:col-span-1 space-y-4">
           <div class="bg-white border border-gray-200 shadow-sm rounded-xl p-4">
             <h3 class="font-semibold">أخبار العراق التقنية</h3>
             <ul class="mt-3 space-y-2 text-sm text-gray-700">

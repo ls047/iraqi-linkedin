@@ -1,5 +1,9 @@
 <template>
-  <div dir="rtl" class="min-h-screen bg-gray-300 text-gray-900 relative overflow-hidden">
+  <div
+    dir="rtl"
+    class="min-h-screen bg-gray-300 text-gray-900 relative overflow-hidden transition-all duration-500"
+    :class="{ 'pointer-events-none md:pointer-events-auto': showMobileMenu }"
+  >
     <!-- ambient stars -->
     <div aria-hidden="true" class="pointer-events-none absolute inset-0">
       <div
@@ -12,11 +16,43 @@
 
     <!-- top navbar -->
     <header class="sticky top-0 z-20 bg-white/70 backdrop-blur border-b border-gray-200">
-      <div class="w-full mx-auto px-4 py-3 flex items-center justify-center gap-6">
-        <RouterLink to="/" class="absolute right-4 items-center gap-2 font-bold text-lg hover:text-[#0A66C2] transition-colors cursor-pointer">
+      <div class="w-full mx-auto px-4 py-3 flex items-center justify-between gap-6">
+        <!-- Desktop Logo - Hidden on mobile -->
+        <RouterLink to="/" class="hidden md:block items-center gap-2 font-bold text-lg hover:text-[#0A66C2] transition-colors cursor-pointer">
           <span>فرصة الي</span>
         </RouterLink>
-        <!-- Logo -->
+
+        <!-- Mobile Header Layout -->
+        <div class="md:hidden flex items-center justify-between w-full">
+          <!-- Mobile Menu Button - Right side -->
+          <button
+            @click="toggleMobileMenu"
+            class="p-2 text-gray-600 hover:text-[#0A66C2] transition-colors cursor-pointer"
+          >
+            <div class="w-6 h-6 flex flex-col justify-center items-center">
+              <span
+                class="block w-5 h-0.5 bg-current transition-all duration-300"
+                :class="{ 'rotate-45 translate-y-1': showMobileMenu }"
+              ></span>
+              <span
+                class="block w-5 h-0.5 bg-current mt-1 transition-all duration-300"
+                :class="{ 'opacity-0': showMobileMenu }"
+              ></span>
+              <span
+                class="block w-5 h-0.5 bg-current mt-1 transition-all duration-300"
+                :class="{ '-rotate-45 -translate-y-1': showMobileMenu }"
+              ></span>
+            </div>
+          </button>
+
+          <!-- Mobile Header Text - Center -->
+          <RouterLink to="/" class="items-center gap-2 font-bold text-lg hover:text-[#0A66C2] transition-colors cursor-pointer">
+            <span>فرصة الي</span>
+          </RouterLink>
+
+          <!-- Empty div for spacing -->
+          <div class="w-10"></div>
+        </div>
 
         <!-- Desktop Navigation -->
         <nav class="hidden md:flex items-center gap-6 text-sm">
@@ -251,19 +287,8 @@
           </div>
         </div>
 
-        <!-- Profile Menu - Now positioned at the very right -->
-        <div dir="ltr" class="absolute left-4" data-dropdown="profile">
-          <button
-            @click="toggleProfileMenu"
-            class="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer"
-          >
-            <img
-              class="h-8 w-8 rounded-full ring-2 ring-[#0A66C2]/50"
-              src="https://api.dicebear.com/7.x/initials/svg?seed=Ali%20Al-Baghdadi"
-              alt="Profile"
-            />
-            <span class="hidden lg:block text-sm text-gray-700">علي</span>
-          </button>
+        <!-- Profile Menu - Desktop Only -->
+        <div dir="ltr" class="absolute left-4 hidden md:block" data-dropdown="profile">
 
           <!-- Profile Dropdown -->
           <div
@@ -272,7 +297,7 @@
             data-dropdown="profile"
           >
             <div class="p-3 border-b border-gray-100">
-              <p class="font-semibold text-sm">علي</p>
+              <p class="font-semibold text-sm">علي البغدادي</p>
               <p class="text-xs text-gray-600">مطور فرونتند</p>
             </div>
             <div class="p-1">
@@ -290,6 +315,14 @@
               >
                 الإعدادات
               </RouterLink>
+              <RouterLink
+                to="/help"
+                class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded cursor-pointer"
+                @click="showProfileMenu = false"
+              >
+                المساعدة والدعم
+              </RouterLink>
+              <div class="border-t border-gray-100 my-1"></div>
               <button
                 @click="logout"
                 class="block w-full text-right px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded cursor-pointer"
@@ -299,110 +332,198 @@
             </div>
           </div>
         </div>
-
-        <!-- Mobile Menu Button -->
-        <button
-          @click="toggleMobileMenu"
-          class="md:hidden p-2 text-gray-600 hover:text-[#0A66C2] transition-colors cursor-pointer"
-        >
-          <div class="w-6 h-6 flex flex-col justify-center items-center">
-            <span
-              class="block w-5 h-0.5 bg-current transition-all duration-300"
-              :class="{ 'rotate-45 translate-y-1': showMobileMenu }"
-            ></span>
-            <span
-              class="block w-5 h-0.5 bg-current mt-1 transition-all duration-300"
-              :class="{ 'opacity-0': showMobileMenu }"
-            ></span>
-            <span
-              class="block w-5 h-0.5 bg-current mt-1 transition-all duration-300"
-              :class="{ '-rotate-45 -translate-y-1': showMobileMenu }"
-            ></span>
-          </div>
-        </button>
       </div>
 
       <!-- Mobile Menu Popup -->
       <div
         v-if="showMobileMenu"
-        class="md:hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
-        @click="showMobileMenu = false"
+        class="md:hidden fixed inset-0 z-50 bg-white/20"
+        @click="closeMobileMenu"
       >
         <div
-          class="absolute top-0 right-0 w-80 h-full bg-white shadow-xl transform transition-transform duration-300"
+          class="absolute top-0 right-0 w-80 h-full bg-white shadow-2xl transform transition-all duration-500 ease-out"
+          :class="showMobileMenu ? 'translate-x-0' : 'translate-x-full'"
           @click.stop
         >
           <!-- Mobile Menu Header -->
-          <div class="p-4 border-b border-gray-200 flex items-center justify-between">
-            <h3 class="font-semibold text-lg">القائمة</h3>
-            <button
-              @click="showMobileMenu = false"
-              class="p-2 text-gray-500 hover:text-gray-700 cursor-pointer"
-            >
-              ✕
-            </button>
+          <div class="relative p-6 border-b border-gray-100 bg-gradient-to-br from-gray-50 to-white">
+            <div class="flex items-center justify-between mb-6">
+              <div class="flex items-center gap-4">
+                <div class="relative">
+                  <div class="w-12 h-12 bg-gradient-to-br from-[#0A66C2] via-blue-600 to-blue-700 rounded-2xl flex items-center justify-center shadow-xl shadow-[#0A66C2]/25">
+                    <span class="text-white text-xl font-bold">ف</span>
+                  </div>
+                  <div class="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full border-2 border-white shadow-lg animate-pulse"></div>
+                </div>
+                <div>
+                  <h3 class="font-bold text-2xl text-gray-900 mb-1">فرصة الي</h3>
+                  <p class="text-sm text-gray-600 font-medium">شبكة مهنية عراقية</p>
+                  <div class="flex items-center gap-2 mt-1">
+                    <span class="text-xs text-[#0A66C2] font-semibold">متصل الآن</span>
+                    <div class="w-2 h-2 bg-green-500 rounded-full animate-ping"></div>
+                  </div>
+                </div>
+              </div>
+              <button
+                @click="closeMobileMenu"
+                class="p-3 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-2xl transition-all duration-300 cursor-pointer group hover:shadow-md"
+              >
+                <div class="w-6 h-6 flex flex-col justify-center items-center">
+                  <span class="block w-5 h-0.5 bg-current transition-all duration-300 group-hover:rotate-45 group-hover:bg-red-500"></span>
+                  <span class="block w-5 h-0.5 bg-current mt-1 transition-all duration-300 group-hover:-rotate-45 group-hover:-translate-y-1 group-hover:bg-red-500"></span>
+                </div>
+              </button>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="grid grid-cols-3 gap-4">
+              <div class="text-center p-4 bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 group cursor-pointer">
+                <div class="text-xl font-bold text-[#0A66C2] group-hover:scale-110 transition-transform">{{ notifications.length }}</div>
+                <div class="text-xs text-gray-600 font-medium">إشعارات</div>
+              </div>
+              <div class="text-center p-4 bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 group cursor-pointer">
+                <div class="text-xl font-bold text-[#0A66C2] group-hover:scale-110 transition-transform">{{ unreadMessages }}</div>
+                <div class="text-xs text-gray-600 font-medium">رسائل</div>
+              </div>
+              <div class="text-center p-4 bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 group cursor-pointer">
+                <div class="text-xl font-bold text-[#0A66C2] group-hover:scale-110 transition-transform">3</div>
+                <div class="text-xs text-gray-600 font-medium">دعوات</div>
+              </div>
+            </div>
           </div>
 
           <!-- Mobile Navigation -->
-          <nav class="p-4 space-y-2">
+          <nav class="p-4 space-y-4">
             <RouterLink
               v-for="item in navigationItems"
               :key="item.path"
               :to="item.path"
-              class="flex items-center gap-3 p-3 rounded-lg transition-colors cursor-pointer"
+              class="flex items-center gap-4 p-5 rounded-3xl transition-all duration-300 cursor-pointer group relative overflow-hidden"
               :class="isActiveRoute(item.path)
-                ? 'bg-[#0A66C2] text-white'
-                : 'text-gray-700 hover:bg-gray-100'"
-              @click="showMobileMenu = false"
+                ? 'bg-gradient-to-r from-[#0A66C2] via-blue-600 to-blue-700 text-white shadow-xl shadow-[#0A66C2]/30'
+                : 'text-gray-700 hover:bg-gray-50 hover:shadow-lg hover:scale-[1.02]'"
+              @click="closeMobileMenu"
             >
-              <span class="text-lg">{{ item.icon }}</span>
-              <span class="flex-1">{{ item.label }}</span>
-              <span
-                v-if="item.badge"
-                class="h-5 w-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center"
-              >
-                {{ item.badge }}
-              </span>
+              <!-- Background glow for active items -->
+              <div
+                v-if="isActiveRoute(item.path)"
+                class="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent opacity-50"
+              ></div>
+
+              <div class="relative z-10">
+                <div class="w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+                  :class="isActiveRoute(item.path)
+                    ? 'bg-white/20 backdrop-blur-sm'
+                    : 'bg-gray-100 group-hover:bg-[#0A66C2]/10'"
+                >
+                  <span class="text-xl">{{ item.icon }}</span>
+                </div>
+                <div
+                  v-if="isActiveRoute(item.path)"
+                  class="absolute -inset-1 bg-white/30 rounded-full animate-ping"
+                ></div>
+              </div>
+
+              <div class="flex-1 z-10">
+                <span class="font-semibold text-base">{{ item.label }}</span>
+                <div class="text-xs opacity-70 mt-1" :class="isActiveRoute(item.path) ? 'text-white/80' : 'text-gray-500'">
+                  {{ getNavigationDescription(item.path) }}
+                </div>
+              </div>
+
+              <div class="flex items-center gap-3 z-10">
+                <span
+                  v-if="item.badge"
+                  class="h-7 w-7 bg-gradient-to-r from-red-500 via-pink-500 to-red-600 text-white text-xs rounded-full flex items-center justify-center font-bold shadow-lg animate-pulse"
+                >
+                  {{ item.badge }}
+                </span>
+                <span
+                  v-if="!isActiveRoute(item.path)"
+                  class="text-gray-400 group-hover:text-[#0A66C2] transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:translate-x-1"
+                >
+                  →
+                </span>
+              </div>
             </RouterLink>
           </nav>
 
           <!-- Mobile User Section -->
-          <div class="p-4 border-t border-gray-200">
-            <div class="flex items-center gap-3 p-3 rounded-lg bg-gray-50">
-              <img
-                class="h-10 w-10 rounded-full ring-2 ring-[#0A66C2]/50"
-                src="https://api.dicebear.com/7.x/initials/svg?seed=Ali%20Al-Baghdadi"
-                alt="Profile"
-              />
+          <div class="p-4 border-t border-gray-100 bg-gray-50">
+            <div class="flex items-center gap-4 p-5 rounded-3xl bg-white border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer">
+              <div class="relative">
+                <img
+                  class="h-16 w-16 rounded-2xl ring-4 ring-[#0A66C2]/20 shadow-xl group-hover:ring-[#0A66C2]/40 transition-all duration-300"
+                  src="https://api.dicebear.com/7.x/initials/svg?seed=Ali%20Al-Baghdadi"
+                  alt="Profile"
+                />
+                <div class="absolute -bottom-2 -right-2 w-6 h-6 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full border-3 border-white shadow-xl animate-pulse"></div>
+              </div>
               <div class="flex-1">
-                <p class="font-semibold text-sm">علي</p>
-                <p class="text-xs text-gray-600">مطور فرونتند</p>
+                <p class="font-bold text-lg text-gray-900 mb-1">علي البغدادي</p>
+                <p class="text-sm text-gray-600 font-medium">مطور فرونتند</p>
+                <div class="flex items-center gap-3 mt-2">
+                  <span class="text-xs text-[#0A66C2] font-semibold bg-[#0A66C2]/10 px-2 py-1 rounded-full">عضو منذ 2023</span>
+                  <div class="flex items-center gap-1">
+                    <div class="w-2 h-2 bg-green-500 rounded-full animate-ping"></div>
+                    <span class="text-xs text-green-600 font-semibold">متصل الآن</span>
+                  </div>
+                </div>
+              </div>
+              <div class="flex flex-col items-center gap-1">
+                <div class="w-3 h-3 bg-green-500 rounded-full animate-ping"></div>
+                <span class="text-xs text-green-600 font-semibold">متصل</span>
               </div>
             </div>
 
-            <div class="mt-3 space-y-1">
+            <div class="mt-6 space-y-3">
               <RouterLink
                 to="/profile"
-                class="flex items-center gap-3 p-3 rounded-lg text-gray-700 hover:bg-gray-100 cursor-pointer"
-                @click="showMobileMenu = false"
+                class="flex items-center gap-4 p-4 rounded-2xl text-gray-700 hover:bg-white cursor-pointer transition-all duration-300 group hover:shadow-md"
+                @click="closeMobileMenu"
               >
-                <span>👤</span>
-                <span>الملف الشخصي</span>
+                <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-[#0A66C2] rounded-xl flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow">
+                  <span class="text-white text-lg group-hover:scale-110 transition-transform">👤</span>
+                </div>
+                <span class="flex-1 font-medium">الملف الشخصي</span>
+                <span class="text-gray-400 group-hover:text-[#0A66C2] transition-colors opacity-0 group-hover:opacity-100">→</span>
               </RouterLink>
+
               <RouterLink
                 to="/settings"
-                class="flex items-center gap-3 p-3 rounded-lg text-gray-700 hover:bg-gray-100 cursor-pointer"
-                @click="showMobileMenu = false"
+                class="flex items-center gap-4 p-4 rounded-2xl text-gray-700 hover:bg-white cursor-pointer transition-all duration-300 group hover:shadow-md"
+                @click="closeMobileMenu"
               >
-                <span>⚙️</span>
-                <span>الإعدادات</span>
+                <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow">
+                  <span class="text-white text-lg group-hover:scale-110 transition-transform">⚙️</span>
+                </div>
+                <span class="flex-1 font-medium">الإعدادات</span>
+                <span class="text-gray-400 group-hover:text-[#0A66C2] transition-colors opacity-0 group-hover:opacity-100">→</span>
               </RouterLink>
+
+              <RouterLink
+                to="/help"
+                class="flex items-center gap-4 p-4 rounded-2xl text-gray-700 hover:bg-white cursor-pointer transition-all duration-300 group hover:shadow-md"
+                @click="closeMobileMenu"
+              >
+                <div class="w-10 h-10 bg-gradient-to-r from-orange-500 to-yellow-500 rounded-xl flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow">
+                  <span class="text-white text-lg group-hover:scale-110 transition-transform">❓</span>
+                </div>
+                <span class="flex-1 font-medium">المساعدة والدعم</span>
+                <span class="text-gray-400 group-hover:text-[#0A66C2] transition-colors opacity-0 group-hover:opacity-100">→</span>
+              </RouterLink>
+
+              <div class="border-t border-gray-200 my-4"></div>
+
               <button
                 @click="logout"
-                class="flex items-center gap-3 p-3 rounded-lg text-red-600 hover:bg-red-50 cursor-pointer w-full text-right"
+                class="flex items-center gap-4 p-4 rounded-2xl text-red-600 hover:bg-white cursor-pointer w-full text-right transition-all duration-300 group hover:shadow-md"
               >
-                <span>🚪</span>
-                <span>تسجيل خروج</span>
+                <div class="w-10 h-10 bg-gradient-to-r from-red-500 to-pink-500 rounded-xl flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow">
+                  <span class="text-white text-lg group-hover:scale-110 transition-transform">🚪</span>
+                </div>
+                <span class="flex-1 font-medium">تسجيل خروج</span>
+                <span class="text-red-400 group-hover:text-red-600 transition-colors opacity-0 group-hover:opacity-100">→</span>
               </button>
             </div>
           </div>
@@ -418,7 +539,10 @@
     </header>
 
     <!-- main content -->
-    <main>
+    <main
+      class="transition-all duration-500"
+      :class="{ 'blur-sm md:blur-none': showMobileMenu }"
+    >
       <slot />
     </main>
 
@@ -446,7 +570,8 @@ const navigationItems = ref([
   { path: '/my-network', label: 'شبكتي', icon: '👥', badge: 3 },
   { path: '/jobs', label: 'وظايف', icon: '💼' },
   { path: '/messages', label: 'الرسائل', icon: '💬', badge: 2 },
-  { path: '/notifications', label: 'الإشعارات', icon: '🔔', badge: 5 }
+  { path: '/notifications', label: 'الإشعارات', icon: '🔔', badge: 5 },
+  { path: '/profile', label: 'الملف الشخصي', icon: '👤' }
 ])
 
 // Reactive state
@@ -504,6 +629,18 @@ const isActiveRoute = (path: string) => {
   return route.path.startsWith(path)
 }
 
+// Helper function for navigation descriptions
+const getNavigationDescription = (path: string) => {
+  const descriptions: Record<string, string> = {
+    '/': 'الصفحة الرئيسية',
+    '/my-network': 'إدارة شبكتك المهنية',
+    '/jobs': 'البحث عن الوظائف',
+    '/messages': 'رسائل ومحادثات',
+    '/notifications': 'الإشعارات والتحديثات'
+  }
+  return descriptions[path] || ''
+}
+
 // Methods
 const toggleProfileMenu = () => {
   showProfileMenu.value = !showProfileMenu.value
@@ -513,6 +650,10 @@ const toggleProfileMenu = () => {
 const toggleMobileMenu = () => {
   showMobileMenu.value = !showMobileMenu.value
   showProfileMenu.value = false // Close profile menu if open
+}
+
+const closeMobileMenu = () => {
+  showMobileMenu.value = false
 }
 
 const toggleNotifications = () => {
