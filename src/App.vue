@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
+import MainLayout from './layout/mainLayout.vue'
 </script>
 
 <template>
-  <router-view />
+  <MainLayout>
+    <RouterView />
+  </MainLayout>
 </template>
 
 <style scoped>
